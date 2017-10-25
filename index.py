@@ -3,7 +3,7 @@
 # Skilaverkefni 9
 
 from bottle import *
-import json
+import json, urllib.request
 
 #static files route
 @route("/static/<filename>")
@@ -12,26 +12,29 @@ def staticFile(filename):
 
 @get("/")
 def index():
-    x = "test"
     with open("static/myndir.json","r") as skra:
         gogn = json.load(skra)
-    print(gogn)
-    print(gogn["mynd"])
-    for i in gogn["mynd"]:
-        print(i["title"])
-        print(i["link"])
-    fjMynda = len(list(gogn["mynd"]))
     listi = gogn["mynd"]
-    
-    """with open("static/myndir.json","w") as skra:
-        gogn[int(big+1)] = x
-        json.dump(gogn,skra)
-    skra.close()"""
-    
     return template("index.tpl",listi = listi)
 
 @post("/vidbot")
 def vidbot():
-    pass
+    x = request.forms.get("title")
+    y = request.forms.get("link")
+    with open("static/myndir.json","r") as skra:
+        gogn = json.load(skra)
+        print(gogn["mynd"])
+        gogn["mynd"].append({"title":x,"link":y})
+    with open("static/myndir.json","w") as skra:
+        json.dump(gogn,skra)
+    listi = gogn["mynd"]
+    return template("index.tpl",listi = listi)
+
+@route("/concerts")
+def index():
+    with urllib.request.urlopen("http://www.apis.is/concerts") as skra:
+        gogn = json.loads(skra.read().decode())
+    listi = gogn["results"]
+    return template("concerts.tpl",listi = listi)
 
 run()

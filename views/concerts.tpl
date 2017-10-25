@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Portfolio Veraldarvefsins</title>
+	<title>Tónleikar</title>
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
-<form action="/vidbot" method="post">
-	<fieldset>
-	<legend><h2>Bæta við mynd</h2></legend>
-	<input type="text" name="title" placeholder="Titill myndar" required><br>
-	<input type="text" name="link" id="link" placeholder="Slóði" title="Afritaðu slóð myndarinnar og límdu hana hérna." required><br>
-	<input type="submit">
-	</fieldset>
-</form>
-<br><br><br><br><br>
+<h1 style="font-size:5em;margin:auto;text-align:center;">CONCERTS</h1>
+<br><br><br><br><br><br><br><br>
 <div style="max-width:800px;margin:auto;">
 %for i in listi:
 	<div style="width:33.3333%;float:left;box-sizing:border-box;">
-	<img width="200px" src="{{i["link"]}}"></img>
-	<h3 style="margin-top:0;" >{{i["title"]}}</h3>
+	<img width="200px" src="{{i["imageSource"]}}"></img>
+	<h3 style="margin-top:0;" >{{i["eventDateName"]}}</h3>
+	<h4>{{i["eventHallName"]}}</h4>
+	<h4>{{i["dateOfShow"]}}</h4>
 	</div>
 %end
 </div>
